@@ -1,0 +1,36 @@
+.navbar {
+  position: absolute;
+  width: 100%;
+  top: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  background-color: gainsboro;
+}
+
+.navbar > ul {
+  margin: 0;
+  padding: 1rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.navbar > a {
+  padding: 1rem;
+}
+
+.navbar > ul > * {
+  display: inline-block;
+
+  padding: 0.2rem;
+  margin: 0.2rem;
+  background-color: white;
+
+  border: grey solid 2px;
+  border-radius: 0.2rem;
+}
