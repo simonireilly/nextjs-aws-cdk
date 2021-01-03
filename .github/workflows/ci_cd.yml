@@ -26,5 +26,8 @@ jobs:
     - name: Test
       run: yarn test
 
+    - name: Build
+      run: yarn build
+
     - name: Synth
-      run: yarn cdk synth
+      run: AWS_PROFILE=default yarn cdk synth
