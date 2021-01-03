@@ -46,6 +46,13 @@ export class NextjsCdkStack extends cdk.Stack {
         code: lambda.Code.fromAsset(path.join(outputDir, 'api-lambda')),
       });
 
+      // Lambda functions for handling images
+      const imageLambda = new lambda.Function(this, 'imageEdgeLambda', {
+        runtime: lambda.Runtime.NODEJS_12_X,
+        handler: 'index.handler',
+        code: lambda.Code.fromAsset(path.join(outputDir, 'image-lambda')),
+      });
+
       // Static Asset bucket for cloudfront distribution as default origin
       const myBucket = new s3.Bucket(this, 'myBucket', {});
       new s3deploy.BucketDeployment(this, 'nextJsAssets', {
@@ -74,6 +81,17 @@ export class NextjsCdkStack extends cdk.Stack {
 
       // Forward API requests to the API edge lambda
       distribution.addBehavior('api/*', origin, {
+        edgeLambdas: [
+          {
+            functionVersion: apiLambda.currentVersion,
+            eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
+            includeBody: true
+          },
+        ],
+      });
+
+      // Forward image requests
+      distribution.addBehavior('_next/image', origin, {
         edgeLambdas: [
           {
             functionVersion: apiLambda.currentVersion,

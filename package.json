@@ -2,14 +2,16 @@
   "name": "nextjs-cdk",
   "version": "0.1.0",
   "license": "MIT",
+  "private": true,
   "bin": {
     "nextjs-cdk": "bin/nextjs-cdk.js"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --build",
+    "clean": "tsc --build --clean",
     "watch": "tsc -w",
     "test": "jest",
-    "cdk": "cdk --profile ${AWS_PROFILE:-}",
+    "cdk": "cdk",
     "dev": "yarn --cwd application dev"
   },
   "devDependencies": {
@@ -30,7 +32,11 @@
     "@aws-cdk/aws-cloudfront-origins": "1.71.0",
     "@aws-cdk/aws-s3": "1.71.0",
     "@aws-cdk/core": "1.71.0",
-    "@sls-next/lambda-at-edge": "1.7.0",
+    "@sls-next/lambda-at-edge": "latest",
     "source-map-support": "^0.5.16"
-  }
+  },
+  "workspaces": [
+    ".",
+    "application"
+  ]
 }
