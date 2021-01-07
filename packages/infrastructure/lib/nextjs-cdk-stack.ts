@@ -11,12 +11,13 @@ import { Builder } from '@sls-next/lambda-at-edge'
 // The builder wraps nextJS in Compatibility layers for Lambda@Edge; handles the page
 // manifest and creating the default-lambda and api-lambda. The final output is an assets
 // folder which can be uploaded to s3 on every deploy.
-const nextConfigDir = 'application';
+const nextConfigDir = '../application';
+const cwd = path.join(process.cwd(), nextConfigDir)
 const outputDir = path.join(nextConfigDir, ".serverless_nextjs");
 
 const options = {
-  cmd: './node_modules/.bin/next',
-  cwd: path.join(process.cwd(), nextConfigDir),
+  cmd: path.join(cwd, '/node_modules/.bin/next'),
+  cwd: cwd,
   env: {},
   args: ['build']
 }
