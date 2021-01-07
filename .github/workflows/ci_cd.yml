@@ -1,7 +1,7 @@
 on:
   pull_request:
 
-name: Deploy to Amazon ECS
+name: Deploy CDK Stack
 
 jobs:
   deploy:
