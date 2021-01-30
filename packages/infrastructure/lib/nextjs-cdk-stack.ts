@@ -4,6 +4,7 @@ import * as origins from '@aws-cdk/aws-cloudfront-origins'
 import * as lambda from '@aws-cdk/aws-lambda'
 import * as s3 from '@aws-cdk/aws-s3'
 import * as s3deploy from '@aws-cdk/aws-s3-deployment'
+import * as acm from '@aws-cdk/aws-certificatemanager
 
 import * as path from 'path'
 import { Builder } from '@sls-next/lambda-at-edge'
@@ -62,6 +63,11 @@ export class NextjsCdkStack extends cdk.Stack {
 
       const origin = new origins.S3Origin(myBucket);
 
+      const certificate = new acm.Certificate(this, 'Certificate', {
+        domainName: 'simonireilly.com',
+        subjectAlternativeNames: ['*.simonireilly.com'],
+      });
+
       // Default distribution requests to the default lambda
       const distribution = new cloudfront.Distribution(this, 'myDist', {
         defaultBehavior: {
@@ -74,7 +80,8 @@ export class NextjsCdkStack extends cdk.Stack {
             }
           ],
         },
-        enableLogging: true
+        enableLogging: true,
+        certificate: certificate
       });
 
       // Forward static file request to s3 directly

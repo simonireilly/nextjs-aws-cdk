@@ -32,5 +32,3 @@ jobs:
     - name: Deploy
       run: AWS_PROFILE=default yarn deploy --outputs-file outputs.json
 
-    - name: Echo Outputs
-      run: cat outputs.json
