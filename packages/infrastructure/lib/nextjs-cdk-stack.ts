@@ -57,6 +57,9 @@ export class NextjsCdkStack extends cdk.Stack {
       // Static Asset bucket for cloudfront distribution as default origin
       const myBucket = new s3.Bucket(this, 'myBucket', {});
 
+      // Allow images to be fetched
+      myBucket.grantRead(imageLambda)
+
       const origin = new origins.S3Origin(myBucket);
 
       // Default distribution requests to the default lambda
@@ -113,10 +116,9 @@ export class NextjsCdkStack extends cdk.Stack {
         distribution: distribution,
       });
 
-      const outputs = new cdk.CfnOutput(this, 'DistributionDomain', {
+      new cdk.CfnOutput(this, 'DistributionDomain', {
         value: `https://${distribution.distributionDomainName}`,
       });
-
     }).catch((err) => {
       console.warn('Build failed for NextJS, aborting CDK operation')
       console.error({ err })

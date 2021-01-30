@@ -29,8 +29,8 @@ jobs:
     - name: Build
       run: yarn build
 
-    - name: Synth
-      run: AWS_PROFILE=default yarn deploy --output-file outputs.json
+    - name: Deploy
+      run: AWS_PROFILE=default yarn deploy --outputs-file outputs.json
 
     - name: Echo Outputs
       run: cat outputs.json
