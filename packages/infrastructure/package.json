@@ -32,6 +32,7 @@
     "@aws-cdk/aws-s3": "1.87.1",
     "@aws-cdk/aws-s3-deployment": "1.87.1",
     "@aws-cdk/aws-certificatemanager": "1.87.1",
+    "@aws-cdk/aws-route53": "1.87.1",
     "@aws-cdk/core": "1.87.1",
     "@sls-next/lambda-at-edge": "alpha",
     "source-map-support": "^0.5.16"
