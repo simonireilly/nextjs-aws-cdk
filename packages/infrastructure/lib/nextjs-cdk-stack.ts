@@ -56,10 +56,6 @@ export class NextjsCdkStack extends cdk.Stack {
 
       // Static Asset bucket for cloudfront distribution as default origin
       const myBucket = new s3.Bucket(this, 'myBucket', {});
-      new s3deploy.BucketDeployment(this, 'nextJsAssets', {
-        sources: [s3deploy.Source.asset(path.join(outputDir, 'assets'))],
-        destinationBucket: myBucket,
-      });
 
       const origin = new origins.S3Origin(myBucket);
 
@@ -75,6 +71,7 @@ export class NextjsCdkStack extends cdk.Stack {
             }
           ],
         },
+        enableLogging: true
       });
 
       // Forward static file request to s3 directly
@@ -91,16 +88,35 @@ export class NextjsCdkStack extends cdk.Stack {
         ],
       });
 
+      // Image cache policy extends the default cache policy, but with query params
+      const imageCachePolicy = new cloudfront.CachePolicy(this, 'imageCachePolicy', {
+        ...cloudfront.CachePolicy.CACHING_OPTIMIZED,
+        cachePolicyName: 'ImageCachingPolicy',
+        comment: 'Policy to cache images for _next/image',
+        queryStringBehavior: cloudfront.CacheQueryStringBehavior.allowList(...['url', 'w', 'q']),
+      });
+
       // Forward image requests
-      distribution.addBehavior('_next/image', origin, {
+      distribution.addBehavior('_next/image*', origin, {
         edgeLambdas: [
           {
-            functionVersion: apiLambda.currentVersion,
+            functionVersion: imageLambda.currentVersion,
             eventType: cloudfront.LambdaEdgeEventType.ORIGIN_REQUEST,
-            includeBody: true
           },
         ],
+        cachePolicy: imageCachePolicy
       });
+      // Upload deployment bucket
+      new s3deploy.BucketDeployment(this, 'nextJsAssets', {
+        sources: [s3deploy.Source.asset(path.join(outputDir, 'assets'))],
+        destinationBucket: myBucket,
+        distribution: distribution,
+      });
+
+      const outputs = new cdk.CfnOutput(this, 'DistributionDomain', {
+        value: `https://${distribution.distributionDomainName}`,
+      });
+
     }).catch((err) => {
       console.warn('Build failed for NextJS, aborting CDK operation')
       console.error({ err })

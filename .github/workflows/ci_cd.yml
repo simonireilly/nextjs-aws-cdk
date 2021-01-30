@@ -30,4 +30,7 @@ jobs:
       run: yarn build
 
     - name: Synth
-      run: AWS_PROFILE=default yarn cdk synth
+      run: AWS_PROFILE=default yarn deploy --output-file outputs.json
+
+    - name: Echo Outputs
+      run: cat outputs.json
