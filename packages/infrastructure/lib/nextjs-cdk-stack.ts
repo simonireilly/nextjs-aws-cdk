@@ -64,16 +64,6 @@ export class NextjsCdkStack extends cdk.Stack {
 
       const origin = new origins.S3Origin(myBucket);
 
-      const hostedZone = r53.HostedZone.fromLookup(this, 'MyZone', {
-        domainName: 'simonireilly.com'
-      });
-
-      const myCertificate = new acm.DnsValidatedCertificate(this, 'mySiteCert', {
-        domainName: 'simonireilly.com',
-        hostedZone,
-        subjectAlternativeNames: ['*.simonireilly.com']
-      });
-
       // Default distribution requests to the default lambda
       const distribution = new cloudfront.Distribution(this, 'myDist', {
         defaultBehavior: {
@@ -87,7 +77,6 @@ export class NextjsCdkStack extends cdk.Stack {
           ],
         },
         enableLogging: true,
-        certificate: myCertificate
       });
 
       // Forward static file request to s3 directly
