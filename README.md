@@ -10,6 +10,9 @@ A CDK deploy to cloudfront distributions of https://github.com/vercel/next.js us
 - [@aws-cdk/aws-cloudfront](https://docs.aws.amazon.com/cdk/api/latest/docs/aws-cloudfront-readme.html#distribution-api---experimental)
 - [@aws-cdk/aws-s3-deployment](https://docs.aws.amazon.com/cdk/api/latest/docs/aws-s3-deployment-readme.html)
 
+## Official Support
+
+Serverless next JS has a construct for this now: https://github.com/serverless-nextjs/serverless-next.js/pull/878
 
 ## Example
 
