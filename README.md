@@ -16,7 +16,7 @@ Serverless next JS has a construct for this now: https://github.com/serverless-n
 
 ## Example
 
-The example page is here - https://d3a8vzm1ccycvj.cloudfront.net/
+The example page is here - https://d1wdqdshxf9nam.cloudfront.net/
 
 ## Features
 
