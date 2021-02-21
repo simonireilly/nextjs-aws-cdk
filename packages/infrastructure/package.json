@@ -26,14 +26,7 @@
     "typescript": "4.1.3"
   },
   "dependencies": {
-    "@aws-cdk/aws-cloudfront": "1.87.1",
-    "@aws-cdk/aws-cloudfront-origins": "1.87.1",
-    "@aws-cdk/aws-lambda": "1.87.1",
-    "@aws-cdk/aws-s3": "1.87.1",
-    "@aws-cdk/aws-s3-deployment": "1.87.1",
-    "@aws-cdk/aws-certificatemanager": "1.87.1",
-    "@aws-cdk/aws-route53": "1.87.1",
-    "@aws-cdk/core": "1.87.1",
+    "@sls-next/cdk-construct": "^1.19.0-alpha.28",
     "@sls-next/lambda-at-edge": "alpha",
     "source-map-support": "^0.5.16"
   },
